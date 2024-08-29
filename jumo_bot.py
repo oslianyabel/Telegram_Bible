@@ -14,18 +14,19 @@ web_server = Flask(__name__)
 voice_msg_activated = {}
 voice = {}
 
-@bot.message_handler(func=lambda message: message.text.startswith("@Bible01_bot"))
+@bot.message_handler(func=lambda message: True)
 def handle_message(message):
-    sms = f"El usuario {message.from_user.username} te ha mencionado en un grupo de telegram al que perteneces con el siguiente mensaje: {message.text[12:]}"
-    
-    print("Bot mencionado!")
-    print(f"{message.from_user.username}: {message.text[12:]}")
-    data = {
-        "id": message.chat.id, 
-        "message": sms
-    }
-    ans = assistant.send_message(data)
-    bot.reply_to(message, ans)
+    if "@EasyBible" in message:
+        print("Bot mencionado!")
+        print(f"{message.from_user.username}: {message.text[12:]}")
+        
+        sms = f"El usuario {message.from_user.username} te ha mencionado en un grupo de telegram al que perteneces con el siguiente mensaje: {message.text[12:]}"
+        data = {
+            "id": message.chat.id, 
+            "message": sms
+        }
+        ans = assistant.send_message(data)
+        bot.reply_to(message, ans)
 
 
 @web_server.route('/', methods=['POST'])
