@@ -177,7 +177,7 @@ if __name__ == "__main__":
     conf.get_default().config_path = "./config_ngrok.yml"
     conf.get_default().region = "eu"
     ngrok.set_auth_token(NGROK_TOKEN)
-    ngrok_tunel = ngrok.connect(5000, bind_tls = True)
+    ngrok_tunel = ngrok.connect(3031, bind_tls = True)
     ngrok_url = ngrok_tunel.public_url
     print(ngrok_url)
     bot.remove_webhook()
