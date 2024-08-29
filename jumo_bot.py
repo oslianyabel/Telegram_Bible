@@ -25,7 +25,7 @@ def handle_message(message):
         "message": sms
     }
     ans = assistant.send_message(data)
-    bot.reply_to(message, ans)
+    bot.reply_to(message, ans, parse_mode = "Markdown")
 
 
 @web_server.route('/', methods=['POST'])

@@ -63,8 +63,8 @@ def send_message(message, text, voice_msg_activated, voice):
             msg = "Lo siento, el envío del audio ha fallado. Le responderé esta vez con texto."
             bot.send_message(message.chat.id, msg, reply_markup=ReplyKeyboardRemove())
             bot.send_chat_action(message.chat.id, "typing")
-            bot.send_message(message.chat.id, text)
+            bot.send_message(message.chat.id, text, parse_mode="Markdown")
     else:
         bot.send_chat_action(message.chat.id, "typing")
-        bot.send_message(message.chat.id, text, reply_markup=ReplyKeyboardRemove())
+        bot.send_message(message.chat.id, text, reply_markup=ReplyKeyboardRemove(), parse_mode="Markdown")
         
