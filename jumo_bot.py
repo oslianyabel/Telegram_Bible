@@ -188,13 +188,13 @@ if __name__ == "__main__":
     conf.get_default().config_path = "./config_ngrok.yml"
     conf.get_default().region = "eu"
     ngrok.set_auth_token(NGROK_TOKEN)
-    ngrok_tunel = ngrok.connect(3031, bind_tls = True)
+    ngrok_tunel = ngrok.connect(3039, bind_tls = True)
     ngrok_url = ngrok_tunel.public_url
     print(ngrok_url)
     bot.remove_webhook()
     time.sleep(1)
     bot.set_webhook(url = ngrok_url) """
     
-    bot.set_webhook(url = "https://telegram-bible.onrender.com")
-    serve(web_server, host = "0.0.0.0", port = 3029)
+    bot.set_webhook(url = "https://api_bible.jumo.com.es/")
+    serve(web_server, host = "0.0.0.0", port = 3039)
     #web_server.run(host="0.0.0.0", port=5000)
