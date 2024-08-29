@@ -14,7 +14,7 @@ web_server = Flask(__name__)
 voice_msg_activated = {}
 voice = {}
 
-@bot.message_handler(func=lambda message: "@EasyBible" in message)
+@bot.message_handler(func = lambda message: "@EasyBible" in message.text)
 def handle_message(message):
     print("Bot mencionado!")
     print(f"{message.from_user.username}: {message.text[12:]}")
@@ -182,7 +182,7 @@ if __name__ == "__main__":
     print(ngrok_url)
     bot.remove_webhook()
     time.sleep(1)
-    bot.set_webhook(url = ngrok_url)"""
+    bot.set_webhook(url = ngrok_url) """
     
     bot.set_webhook(url = "https://telegram-bible.onrender.com")
     serve(web_server, host = "0.0.0.0", port = 3031)
