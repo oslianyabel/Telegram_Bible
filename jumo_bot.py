@@ -183,18 +183,20 @@ def reply_audio(message):
 
 if __name__ == "__main__":
     print("Iniciando Bot")
+    URL_BOT = os.getenv("URL_BOT")
+    PORT_BOT = os.getenv("PORT_BOT")
     
     """ NGROK_TOKEN = os.getenv('NGROK_TOKEN')
     conf.get_default().config_path = "./config_ngrok.yml"
     conf.get_default().region = "eu"
     ngrok.set_auth_token(NGROK_TOKEN)
-    ngrok_tunel = ngrok.connect(3039, bind_tls = True)
+    ngrok_tunel = ngrok.connect(PORT_BOT, bind_tls = True)
     ngrok_url = ngrok_tunel.public_url
     print(ngrok_url)
     bot.remove_webhook()
     time.sleep(1)
     bot.set_webhook(url = ngrok_url) """
     
-    bot.set_webhook(url = "https://api_bible.jumo.com.es/")
-    serve(web_server, host = "0.0.0.0", port = 3039)
+    bot.set_webhook(url = URL_BOT)
+    serve(web_server, host = "0.0.0.0", port = PORT_BOT)
     #web_server.run(host="0.0.0.0", port=5000)
