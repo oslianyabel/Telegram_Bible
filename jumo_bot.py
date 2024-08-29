@@ -14,19 +14,18 @@ web_server = Flask(__name__)
 voice_msg_activated = {}
 voice = {}
 
-@bot.message_handler(func=lambda message: True)
+@bot.message_handler(func=lambda message: "@EasyBible" in message)
 def handle_message(message):
-    if "@EasyBible" in message:
-        print("Bot mencionado!")
-        print(f"{message.from_user.username}: {message.text[12:]}")
-        
-        sms = f"El usuario {message.from_user.username} te ha mencionado en un grupo de telegram al que perteneces con el siguiente mensaje: {message.text[12:]}"
-        data = {
-            "id": message.chat.id, 
-            "message": sms
-        }
-        ans = assistant.send_message(data)
-        bot.reply_to(message, ans)
+    print("Bot mencionado!")
+    print(f"{message.from_user.username}: {message.text[12:]}")
+    
+    sms = f"El usuario {message.from_user.username} te ha mencionado en un grupo de telegram al que perteneces con el siguiente mensaje: {message.text[12:]}"
+    data = {
+        "id": message.chat.id, 
+        "message": sms
+    }
+    ans = assistant.send_message(data)
+    bot.reply_to(message, ans)
 
 
 @web_server.route('/', methods=['POST'])
@@ -182,8 +181,9 @@ if __name__ == "__main__":
     ngrok_url = ngrok_tunel.public_url
     print(ngrok_url)
     bot.remove_webhook()
-    time.sleep(1) """
+    time.sleep(1)
+    bot.set_webhook(url = ngrok_url)"""
     
     bot.set_webhook(url = "https://telegram-bible.onrender.com")
-    #web_server.run(host="0.0.0.0", port=5000)
     serve(web_server, host = "0.0.0.0", port = 3031)
+    #web_server.run(host="0.0.0.0", port=5000)
