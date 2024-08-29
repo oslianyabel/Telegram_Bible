@@ -18,7 +18,7 @@ def handle_message(message):
     print("Bot mencionado!")
     print(f"{message.from_user.username}: {message.text[12:]}")
     
-    sms = f"El usuario {message.from_user.username} te ha mencionado en un grupo de telegram al que perteneces con el siguiente mensaje: {message.text[12:]}"
+    sms = f"El usuario {message.from_user.username} te ha mencionado en un grupo de telegram al que perteneces con el siguiente mensaje: {message.text}"
     data = {
         "id": message.chat.id, 
         "message": sms
