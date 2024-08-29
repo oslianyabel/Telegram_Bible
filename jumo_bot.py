@@ -14,12 +14,12 @@ web_server = Flask(__name__)
 voice_msg_activated = {}
 voice = {}
 
-@bot.message_handler(func = lambda message: "@EasyBible" in message.text)
+@bot.message_handler(func = lambda message: "@EasyBible" in message.text and message.chat.type in ['group', 'supergroup'])
 def handle_message(message):
     print("Bot mencionado!")
-    print(f"{message.from_user.username}: {message.text[12:]}")
+    print(f"{message.from_user.username}: {message.text}")
     
-    sms = f"El usuario {message.from_user.username} te ha mencionado en un grupo de telegram al que perteneces con el siguiente mensaje: {message.text[12:]}"
+    sms = f"El usuario {message.from_user.username} te ha mencionado en un grupo de telegram al que perteneces con el siguiente mensaje: {message.text}"
     data = {
         "id": message.chat.id, 
         "message": sms
@@ -38,6 +38,9 @@ def webhook():
 
 @bot.message_handler(commands=["settings"])
 def cmd_settings(message):
+    if message.chat.type in ['group', 'supergroup']:
+        return
+    
     print("/settings")
     
     markup = ReplyKeyboardMarkup(
@@ -136,6 +139,9 @@ def settings_voices(message):
 
 @bot.message_handler(commands=["start", "help"])
 def cmd_start(message):
+    if message.chat.type in ['group', 'supergroup']:
+        return
+    
     print("/start")
     data = {
         "id": message.chat.id, 
@@ -148,6 +154,9 @@ def cmd_start(message):
  
 @bot.message_handler(content_types=['text'])
 def reply_text(message):
+    if message.chat.type in ['group', 'supergroup']:
+        return
+    
     print(f"-User: {message.text}")
     data = {
         "id": message.chat.id, 
@@ -159,8 +168,10 @@ def reply_text(message):
     
 @bot.message_handler(content_types=["audio", "voice"])
 def reply_audio(message):
+    if message.chat.type in ['group', 'supergroup']:
+        return
+    
     text = utils.voice_to_text(message)
-     
     data = {
         "id": message.chat.id, 
         "message": text
