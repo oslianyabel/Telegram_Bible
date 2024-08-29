@@ -9,6 +9,37 @@ TELEGRAM_TOKEN = os.getenv('BIBLE_TOKEN')
 bot = telebot.TeleBot(TELEGRAM_TOKEN)
 client = OpenAI(api_key = os.getenv("OPENAI_API_KEY"))
 
+def text_to_voice(text, voice, chat_id):
+    bot.send_chat_action(chat_id, "record_audio")
+    response = client.audio.speech.create(
+        model = "tts-1",
+        voice = voice,
+        input = text
+    )
+    response.stream_to_file("voice_out.mp3")
+    return "voice_out.mp3"
+
+
+def voice_to_text(message):
+    # Descargar el archivo de audio
+    file_info = bot.get_file(message.audio.file_id if message.audio else message.voice.file_id)
+    downloaded_file = bot.download_file(file_info.file_path)
+    # Guardar el archivo en local
+    with open("voice_in.mp3", 'wb') as audio_file:
+        audio_file.write(downloaded_file)
+        print("Audio recibido y guardado.")
+        
+    with open("voice_in.mp3", 'rb') as audio_file:
+        #transcripcion
+        transcription = client.audio.transcriptions.create(
+            model="whisper-1", 
+            file=audio_file
+        )
+        print(f"Transcripción del audio: {transcription.text}")
+        
+    return transcription.text
+
+
 def send_message(message, text, voice_msg_activated, voice):
     try:
         x = voice[message.chat.id]
