@@ -7,12 +7,11 @@ TELEGRAM_TOKEN = os.getenv('BIBLE_TOKEN')
 bot = telebot.TeleBot(TELEGRAM_TOKEN)
 
 def send_message(data):
+    bot.send_chat_action(data["id"], "typing")
     URL_API = os.getenv("URL_API")
-    
     headers = {
         "token": os.getenv('TOKEN_API')
     }
-    
     response = requests.post(URL_API, headers=headers, data=data)
     print(f"Codigo de respuesta: {response.status_code}")
     ans = response.json()
